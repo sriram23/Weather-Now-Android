@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0000FF</color>
+    <color name="colorPrimaryDark">#0066FF</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorTrans1">#4D000000</color>
+    <color name="colorCool">#006eff</color>
+    <color name="colorMild">#00ddff</color>
+    <color name="colorWarm">#ffae00</color>
+    <color name="colorHot">#ff5000</color>
+    <color name="ColorVHot">#ff0000</color>
+    <color name="trans">#66ffffff</color>
+    <color name="dark">#000000</color>
+    <color name="light">#ffffff</color>
+</resources>
