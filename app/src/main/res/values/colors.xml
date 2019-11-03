@@ -15,4 +15,10 @@
     <color name="light">#ffffff</color>
     <color name="AQIbg">#ffff77</color>
     <color name="AQIbg_dark">#AA9900</color>
+    <color name="green">#00AA00</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="orange">#FF5000</color>
+    <color name="mildered">#990000</color>
+    <color name="violet">#9900ff</color>
+    <color name="maroon">#660000</color>
 </resources>

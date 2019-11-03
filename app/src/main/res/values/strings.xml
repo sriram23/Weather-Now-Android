@@ -13,4 +13,11 @@
     <string name="sunrise_sunset">Sunrise &amp; Sunset</string>
     <string name="AQI_title">Air Quality Index</string>
     <string name="AQI">Check Air Quality Index for your city</string>
+    <string name="en_aqi_err">Air quality data isn\'t available for the place you have entered. Try searching for nearby places.</string>
+    <string name="good">Air quality is considered satisfactory, and air pollution poses little or no risk</string>
+    <string name="moderate">Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution. \n\n Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
+    <string name="sensitive">Members of sensitive groups may experience health effects. The general public is not likely to be affected. \n\n Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
+    <string name="unhealthy">Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects \n\n Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion</string>
+    <string name="veryunhealthy">Health warnings of emergency conditions. The entire population is more likely to be affected. \n\n Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.</string>
+    <string name="hazardous">Health alert: everyone may experience more serious health effects \n\n Everyone should avoid all outdoor exertion</string>
 </resources>
