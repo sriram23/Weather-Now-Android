@@ -17,8 +17,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -54,12 +57,13 @@ public class MainActivity extends AppCompatActivity {
     String Lon;
     String Con;
     String flag_link;
+    EditText et;
+    Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Toast.makeText(this, "Hello World!", Toast.LENGTH_SHORT).show();
         Con = "IN";
         Temperature_mainTV = findViewById(R.id.TempMain);
         CityTV = findViewById(R.id.City);
@@ -74,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
         WindTV = findViewById(R.id.windTextView);
         scroll = findViewById(R.id.scrollView);
         pbar = findViewById(R.id.progress);
-
+        et = findViewById(R.id.CitySearch);
         scroll.setVisibility(View.INVISIBLE);
-
+        btn = findViewById(R.id.SearchBtn);
         latlon_link = "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric&apikey=%s";
         yandex_trans = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=%s&text=%s&lang=%s";
         flag_link = "https://www.countryflags.io/%s/shiny/64.png";
-        lang = "ta";
+        lang = "en";
 //        Lat = "11.1045297";
 //        Lon = "76.9378387";
         Lat = "11.0165332";
@@ -108,48 +112,45 @@ public class MainActivity extends AppCompatActivity {
         String Lat = String.valueOf(location.getLatitude());
         String Lng = String.valueOf(location.getLongitude());
         String FinalLatLon_Link = String.format(latlon_link,Lat,Lng,KEY);
-        Toast.makeText(this,"Lat:"+Lat+" Lng:"+Lng,Toast.LENGTH_LONG );
     }
 
     public void getLatLon(View view) {
         try {
-            EditText et = findViewById(R.id.CitySearch);
+//            EditText et = findViewById(R.id.CitySearch);
             String location = et.getText().toString();
             Geocoder gc = new Geocoder(this);
             List<Address> list = gc.getFromLocationName(location, 1);
-            Log.e("ERROR_MAHN", String.valueOf(list.isEmpty()));
             if(list.isEmpty()){
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                alertDialog.setTitle(getString(R.string.ta_location_err_title));
-                alertDialog.setMessage(getString(R.string.ta_location_err));
+                alertDialog.setTitle(getString(R.string.en_location_err_title));
+                alertDialog.setMessage(getString(R.string.en_location_err));
                 alertDialog.show();
-                Toast.makeText(MainActivity.this,getString(R.string.ta_location_err),Toast.LENGTH_LONG);
-                Log.e("ERROR_MAHN","Invalid!");
             }
             else {
                 Address address = list.get(0);
-                Log.e("ERROR_MAHN","Valid! "+list.toString());
-                Toast.makeText(this,list.toString(),Toast.LENGTH_LONG);
                 String locality = address.getLocality();
-//                Toast.makeText(MainActivity.this,locality,Toast.LENGTH_LONG);
                 Lat = String.valueOf(address.getLatitude());
                 Lon = String.valueOf(address.getLongitude());
-                Log.e("ERROR_MAHN",Lat+" "+Lon+" "+locality);
                 String FinalLink = String.format(latlon_link, Lat, Lon, KEY);
                 WeatherAsyncTask task = new WeatherAsyncTask();
                 task.execute(FinalLink);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("ERROR_MAHN",e.toString());
         }
     }
 
-    public void gotoYandex(View view) {
-//        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("translate.yandex.com")));
-        WebView webView = findViewById(R.id.webV);
-        webView.loadUrl("translate.yandex.com");
+    public void moveToAQI(View view) {
+        Intent intent = new Intent(MainActivity.this,AQIActivity.class);
+        intent.putExtra("city",CityTV.getText().toString());
+        startActivity(intent);
     }
+
+//    public void gotoYandex(View view) {
+////        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("translate.yandex.com")));
+//        WebView webView = findViewById(R.id.webV);
+//        webView.loadUrl("translate.yandex.com");
+//    }
 
 
     protected class CountryAsyncTask extends AsyncTask<String, Void, Bitmap> {
@@ -189,10 +190,10 @@ public class MainActivity extends AppCompatActivity {
                 BufferedReader br = new BufferedReader(new InputStreamReader(weatherURL.openConnection().getInputStream(),"UTF-8"));
                 String JSONBase =  br.readLine();
                 JSONObject base = new JSONObject(JSONBase);
-                result[0] = translate_ta(base.getString("name"));
-                result[1] = String.valueOf(base.getJSONObject("main").getDouble("temp"));
+                result[0] = base.getString("name");
+                result[1] = String.valueOf((int)base.getJSONObject("main").getDouble("temp"));
                 result[2] = base.getJSONArray("weather").getJSONObject(0).getString("main");
-                result[3] = translate_ta("Weather: "+base.getJSONArray("weather").getJSONObject(0).getString("description"));
+                result[3] = base.getJSONArray("weather").getJSONObject(0).getString("description");
                 result[4] = String.valueOf(base.getJSONObject("main").getDouble("temp_min"));
                 result[5] = String.valueOf(base.getJSONObject("main").getDouble("temp_max"));
                 result[6] = base.getJSONObject("wind").getString("speed");
@@ -200,8 +201,13 @@ public class MainActivity extends AppCompatActivity {
                 result[8] = String.valueOf(getClimate(result[2]));
                 result[9] = convertTime(base.getJSONObject("sys").getLong("sunrise"));
                 result[10] = convertTime(base.getJSONObject("sys").getLong("sunset"));
-                result[11] = getString(R.string.ta_lastupdate)+convertTime(base.getLong("dt"));
-                result[12] = getString(R.string.ta_wind);
+                if(lang.equals("ta")) {
+//                    result[11] = translate_ta(getString(R.string.ta_lastupdate) + convertTime(base.getLong("dt")));
+                }
+                else{
+                    result[11] = getString(R.string.en_lastupdate) + convertTime(base.getLong("dt"));
+                }
+                result[12] = getString(R.string.en_wind);
                 result[13] = base.getJSONObject("sys").getString("country");
 
 //                String CityName = base.getString("name");
@@ -229,14 +235,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] aVoid) {
             super.onPostExecute(aVoid);
-//            Toast.makeText(MainActivity.this, aVoid[0]+" "+aVoid[1], Toast.LENGTH_SHORT).show();
             Temperature_mainTV.setText(aVoid[1]+"°C");
             GradientDrawable tempCircle = (GradientDrawable) Temperature_mainTV.getBackground();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 Temperature_mainTV.setBackground(getResources().getDrawable(R.drawable.temp_circle));
-//                int color = getTempColor(aVoid[1]);
-//                Toast.makeText(MainActivity.this,color,Toast.LENGTH_LONG);
-//                tempCircle.setColor(color);
             }
             CityTV.setText(aVoid[0]);
             WeatherDescTV.setText(aVoid[3]);
@@ -244,18 +246,22 @@ public class MainActivity extends AppCompatActivity {
             Temp_maxTV.setText(aVoid[5]+"°C");
             WindSpeedTV.setText(aVoid[6]+" m/s");
             WeatherImgView.setImageResource(Integer.parseInt(aVoid[8]));
-//            roateImage(WeatherImgView,Integer.parseInt(aVoid[7]));
-//            Toast.makeText(MainActivity.this, aVoid[9]+" "+aVoid[10], Toast.LENGTH_SHORT).show();
             Sunrise.setText(aVoid[9]);
             Sunset.setText(aVoid[10]);
             LastUpdate.setText(aVoid[11]);
             WindTV.setText(aVoid[12]);
             scroll.setVisibility(View.VISIBLE);
             pbar.setVisibility(View.GONE);
-            Toast.makeText(MainActivity.this,aVoid[13],Toast.LENGTH_LONG);
             Con = aVoid[13];
             String flag_link = "https://www.countryflags.io/%s/shiny/64.png";
-            Toast.makeText(MainActivity.this,"Flag Task Starting",Toast.LENGTH_LONG);
+            if(lang.equals("en")){
+                et.setHint(getString(R.string.en_hint_text));
+                btn.setText(R.string.en_search);
+            }
+            else{
+                et.setHint(getString(R.string.ta_hint_text));
+                btn.setText(R.string.ta_search);
+            }
             CountryAsyncTask task = new CountryAsyncTask();
             task.execute(flag_link,aVoid[13]);
 
@@ -312,24 +318,25 @@ public class MainActivity extends AppCompatActivity {
             return human;
         }
 
-        private String translate_ta(String name) {
-            String resp = null;
-            try {
-                URL transURL = new URL(String.format(yandex_trans, KEY_YANDEX, name, lang));
-                BufferedReader br = new BufferedReader(new InputStreamReader(transURL.openConnection().getInputStream(), "UTF-8"));
-                String Jresp = br.readLine();
-                JSONObject base = new JSONObject(Jresp);
-                resp = base.getJSONArray("text").getString(0);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return resp;
-        }
+//        private String translate_ta(String name) {
+//            String resp = null;
+//            try {
+//                URL transURL = new URL(String.format(yandex_trans, KEY_YANDEX, name, lang));
+//                BufferedReader br = new BufferedReader(new InputStreamReader(transURL.openConnection().getInputStream(), "UTF-8"));
+//                String Jresp = br.readLine();
+//                JSONObject base = new JSONObject(Jresp);
+//                resp = base.getJSONArray("text").getString(0);
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            return resp;
+//        }
     }
+
 }

@@ -13,4 +13,6 @@
     <color name="trans">#66ffffff</color>
     <color name="dark">#000000</color>
     <color name="light">#ffffff</color>
+    <color name="AQIbg">#ffff77</color>
+    <color name="AQIbg_dark">#AA9900</color>
 </resources>

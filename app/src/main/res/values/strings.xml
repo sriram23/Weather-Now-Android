@@ -1,10 +1,16 @@
 <resources>
-    <string name="app_name">தற்போதைய வானிலை</string>
+    <string name="app_name">Weather Now</string>
     <string name="ta_lastupdate">கடைசியாக புதுப்பிக்கப்பட்டது:</string>
-    <string name="ta_wind">காற்று</string>
+    <string name="en_lastupdate">Last Updated on:</string>
+    <string name="en_wind">Wind</string>
     <string name="trans_text">Translated by Yandex | யாண்டெக்ஸ் மூலம் மொழிபெயர்க்கப்பட்டது </string>
-    <string name="ta_hint_text">இருப்பிடத்தை உள்ளிடவும்</string>
+    <string name="ta_hint_text">இருப்பிடம் அல்லது அஞ்சல் குறியீடு உள்ளிடவும்</string>
+    <string name="en_hint_text">Enter Location / Pincode</string>
     <string name="ta_search">தேடு</string>
-    <string name="ta_location_err">இருப்பிடத்தைக் கண்டுபிடிக்க முடியவில்லை</string>
-    <string name="ta_location_err_title">மன்னிக்கவும்</string>
+    <string name="en_search">Search</string>
+    <string name="en_location_err">We could not locate the place you entered</string>
+    <string name="en_location_err_title">Sorry!</string>
+    <string name="sunrise_sunset">Sunrise &amp; Sunset</string>
+    <string name="AQI_title">Air Quality Index</string>
+    <string name="AQI">Check Air Quality Index for your city</string>
 </resources>
