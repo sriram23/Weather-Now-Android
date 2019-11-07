@@ -1,5 +1,6 @@
 package com.example.sriram.weathernow;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     String Con;
     String flag_link;
     EditText et;
-    Button btn;
+    Button btn,secondary;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         pbar = findViewById(R.id.progress);
         et = findViewById(R.id.CitySearch);
         scroll.setVisibility(View.INVISIBLE);
+        secondary = findViewById(R.id.secondary_Aqi);
         btn = findViewById(R.id.SearchBtn);
         latlon_link = "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric&apikey=%s";
         yandex_trans = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=%s&text=%s&lang=%s";
@@ -87,8 +90,10 @@ public class MainActivity extends AppCompatActivity {
         lang = "en";
 //        Lat = "11.1045297";
 //        Lon = "76.9378387";
-        Lat = "11.0165332";
-        Lon = "76.9694461";
+//        Lat = "11.0165332";
+//        Lon = "76.9694461";
+        Lat = "1.0";
+        Lon = "1.0";
 //        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 //        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 //            // TODO: Consider calling
@@ -103,10 +108,10 @@ public class MainActivity extends AppCompatActivity {
 //        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
         String FinalLink = String.format(latlon_link,Lat,Lon,KEY);
         flag_country = findViewById(R.id.country_flag);
-        CountryAsyncTask task = new CountryAsyncTask();
-        task.execute(flag_link,Con);
-        WeatherAsyncTask task1 = new WeatherAsyncTask();
-        task1.execute(FinalLink);
+//        CountryAsyncTask task = new CountryAsyncTask();
+//        task.execute(flag_link,Con);
+//        WeatherAsyncTask task1 = new WeatherAsyncTask();
+//        task1.execute(FinalLink);
     }
     public void onLocationChanged(Location location) {
         String Lat = String.valueOf(location.getLatitude());
@@ -185,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         protected String[] doInBackground(String... voids) {
             try {
 //                scroll.setVisibility(View.GONE);
-//                pbar.setVisibility(View.VISIBLE);
+                pbar.setVisibility(View.VISIBLE);
                 URL weatherURL = new URL(voids[0]);
                 BufferedReader br = new BufferedReader(new InputStreamReader(weatherURL.openConnection().getInputStream(),"UTF-8"));
                 String JSONBase =  br.readLine();
@@ -205,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 //                    result[11] = translate_ta(getString(R.string.ta_lastupdate) + convertTime(base.getLong("dt")));
                 }
                 else{
-                    result[11] = getString(R.string.en_lastupdate) + convertTime(base.getLong("dt"));
+                    result[11] = getString(R.string.en_lastupdate) + " " + convertTime(base.getLong("dt"));
                 }
                 result[12] = getString(R.string.en_wind);
                 result[13] = base.getJSONObject("sys").getString("country");
@@ -235,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] aVoid) {
             super.onPostExecute(aVoid);
+            secondary.setVisibility(View.GONE);
             Temperature_mainTV.setText(aVoid[1]+"°C");
             GradientDrawable tempCircle = (GradientDrawable) Temperature_mainTV.getBackground();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -337,6 +343,67 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //            return resp;
 //        }
+
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Exit");
+            builder.setMessage("Are you sure want to exit?");
+            builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        finishAffinity();
+                    }
+                    System.exit(0);
+                }
+            });
+            builder.setNegativeButton("Cancel",null);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.setCancelable(true);
+            alertDialog.show();
+        }
+        return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu,menu);
+        MenuItem weather = menu.findItem(R.id.weatherMenu);
+        weather.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.aqiMenu:
+                Intent intent = new Intent(MainActivity.this,AQIActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.exitMenu:
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Exit");
+                builder.setMessage("Are you sure want to exit?");
+                builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            finishAffinity();
+                        }
+                        System.exit(0);
+                    }
+                });
+                builder.setNegativeButton("Cancel",null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setCancelable(true);
+                alertDialog.show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+

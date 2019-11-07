@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list android:id = "@+id/splash"
+    android:oneshot="false"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_sunny" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_moon" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_cloudy" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_cloudy_day_3" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_thunder" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_rainy_6" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_cloudy_day_1" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_cloudy_day_2" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_cloudy_night_1" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_cloudy_night_2" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_cloudy_night_3" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_rainy_4" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_rainy_5" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_rainy_6" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_rainy_7" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_snowy_4" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_snowy_5" android:duration="1000"/>
+    <item android:drawable="@drawable/ic_snowy_6" android:duration="1000"/>
+</animation-list>

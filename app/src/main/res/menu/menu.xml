@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/lang_opt"
-        android:title="English"
+    <item android:id="@+id/weatherMenu"
+        android:title="Weather Now"
         android:visible="true"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
+    <item android:id="@+id/aqiMenu"
+        android:title="Air Quality Index (AQI)"
+        android:visible="true"
+        app:showAsAction="never"/>
+    <item android:id="@+id/exitMenu"
+    android:title="Exit"
+    android:visible="true"
+    app:showAsAction="never"/>
 </menu>

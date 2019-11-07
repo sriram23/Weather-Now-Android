@@ -24,11 +24,24 @@
         android:text="@string/en_search"
         android:layout_margin="5dp"
         android:onClick="getLatLon"/>
-    <ProgressBar
-        android:id="@+id/progress"
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/SplashStyle"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -263,4 +276,15 @@
                 android:onClick="moveToAQI"/>
         </LinearLayout>
     </ScrollView>
+    <Button
+        android:id="@+id/secondary_Aqi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Check AQI"
+        android:padding="10dp"
+        android:layout_margin="5dp"
+        android:textColor="@color/dark"
+        android:background="@drawable/round_button_yellow"
+        android:onClick="moveToAQI"/>
 </LinearLayout>

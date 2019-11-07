@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -6,12 +6,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/montserratbold</item>
+        <item name="fontFamily">@font/montserratbold</item>
     </style>
     <!--Custom AQI Theme-->
     <style name="CustomThemeAQI" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/AQIbg_dark</item>
         <item name="colorPrimaryDark">@color/AQIbg</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/montserratbold</item>
+        <item name="fontFamily">@font/montserratbold</item>
+    </style>
+
+    <style name="SplashStyle" parent="@style/Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/splash</item>
+        <item name="android:minHeight">50dp</item>
+        <item name="android:minWidth">50dp</item>
     </style>
 
 </resources>

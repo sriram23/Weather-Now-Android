@@ -24,15 +24,35 @@
         android:layout_margin="5dp"
         android:textColor="@color/dark"
         android:onClick="getAQI"/>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            style="@style/SplashStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/aqiLinear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorTrans1"
         android:padding="10dp"
         android:orientation="vertical">
+        <TextView
+            android:id="@+id/aqi_station"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <LinearLayout
+            android:id="@+id/aqiLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -43,7 +63,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:layout_weight="1"
-                android:textColor="@color/dark"
                 tools:text="100"/>
             <TextView
                 android:id="@+id/aqiLevel"
@@ -52,7 +71,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:textSize="20sp"
-                android:textColor="@color/dark"
                 android:layout_weight="1"/>
         </LinearLayout>
         <TextView
@@ -63,5 +81,20 @@
             android:textColor="@color/dark"
             tools:text="Unhealthy"/>
     </LinearLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/round_button"
+            android:onClick="goToWeather"
+            android:text="Weather"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 </LinearLayout>
